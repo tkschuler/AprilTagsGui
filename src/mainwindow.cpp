@@ -243,7 +243,7 @@ void MainWindow::processImage(cv::Mat& image, cv::Mat& image_gray) {
 
 }
 
-void MainWindow::print_detection(AprilTags::TagDetection& detection) const {
+void MainWindow::print_detection(AprilTags::TagDetection& detection) {
     cout << "  Id: " << detection.id
          << " (Hamming: " << detection.hammingDistance << ")";
 
@@ -257,6 +257,7 @@ void MainWindow::print_detection(AprilTags::TagDetection& detection) const {
     Eigen::Matrix3d rotation;
     detection.getRelativeTranslationRotation(m_tagSize, m_fx, m_fy, m_px, m_py,
                                              translation, rotation);
+
 
     Eigen::Matrix3d F;
     F <<
@@ -276,6 +277,15 @@ void MainWindow::print_detection(AprilTags::TagDetection& detection) const {
          << ", roll=" << roll
      << ", \n THIS IS A FUCKING TEST!!!!"
          << endl;
+
+   // ui->updateText->setText(QString::fromStdString(s));
+    ui->textBrowser->setTextColor(Qt::yellow);
+    ui->textBrowser->setText(QString::fromStdString("Tags Detected: " + to_string(55)));
+    ui->textBrowser->setTextColor(Qt::white);
+    ui->textBrowser->append(QString::fromStdString("Distance: " + to_string(translation.norm()) + " X: " + to_string(translation(0)) +
+                                                   " Y: " + to_string(translation(1)) + " Z: " + to_string(translation(2))+ " Roll: " + to_string(roll)));
+    //ui->textBrowser->setText(QString::fromStdString("Distance: " + to_string(translation.norm()) + " X: " + to_string(translation(0)) +
+    //                                                " Y: " + to_string(translation(1)) + " Z: " + to_string(translation(2))+ " Roll: " + to_string(roll)));
 
     // Also note that for SLAM/multi-view application it is better to
     // use reprojection error of corner points, because the noise in

@@ -41,13 +41,13 @@ public:
     bool m_arduino; // send tag detections to serial port?
     bool m_timing = false; // print timing information for each tag extraction call
 
-    int m_width; // image size in pixels
-    int m_height;
-    double m_tagSize; // April tag side length in meters of square black frame
-    double m_fx; // camera focal length in pixels
-    double m_fy;
-    double m_px; // camera principal point
-    double m_py;
+    int m_width = 640; // image size in pixels
+    int m_height = 480;
+    double m_tagSize = .2; // April tag side length in meters of square black frame
+    double m_fx = 600; // camera focal length in pixels
+    double m_fy = 600;
+    double m_px = m_width/2; // camera principal point
+    double m_py = m_width/2;
 
 
     int m_deviceId; // camera id (in case of multiple cameras)
@@ -75,7 +75,7 @@ private slots:
 
     void processImage(cv::Mat& image, cv::Mat& image_gray);
 
-    void print_detection(AprilTags::TagDetection& detection) const;
+    void print_detection(AprilTags::TagDetection& detection);
 
     void on_pushButton_crosshair_clicked();
 
